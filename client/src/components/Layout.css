@@ -1,0 +1,259 @@
+/* ========================================
+   LAYOUT — Yellow & Black Pickleball Theme
+   Font: Bebas Neue (headings) + Inter (body)
+   ======================================== */
+
+/* ---------- VARIABLES ---------- */
+:root {
+  --black: #1a1a1a;
+  --black-light: #2a2a2a;
+  --black-lighter: #3a3a3a;
+  --yellow: #f5d30b;
+  --yellow-light: #ffe548;
+  --yellow-dark: #c9ab00;
+  --yellow-glow: rgba(245, 211, 11, 0.15);
+  --white: #ffffff;
+  --gray: #a0a0a0;
+  --gray-dark: #666666;
+
+  --header-height: 64px;
+  --sidebar-width: 220px;
+  --footer-height: 48px;
+
+  --font-heading: "Bebas Neue", "Arial Black", sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* ---------- LAYOUT SHELL ---------- */
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-body);
+}
+
+/* ---------- HEADER ---------- */
+.header {
+  height: var(--header-height);
+  background: var(--black-light);
+  border-bottom: 3px solid var(--yellow);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.brand-icon {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.brand-name {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  letter-spacing: 2px;
+  color: var(--yellow);
+  text-transform: uppercase;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--yellow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 2px solid var(--yellow-dark);
+}
+
+.header-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.header-avatar span {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--black);
+}
+
+.header-username {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--white);
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.header-auth-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+/* ---------- BUTTONS ---------- */
+.btn-app {
+  position: relative;
+  padding: 8px 20px 8px 12px;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+
+.btn-app-filled {
+  background: var(--yellow);
+  color: var(--black);
+}
+
+.btn-app-filled:hover {
+  background: var(--yellow-light);
+  box-shadow: 0 0 18px var(--yellow-glow);
+  transform: translateY(-1px);
+}
+
+.btn-app-outline {
+  background: transparent;
+  color: var(--yellow);
+  border: 2px solid var(--yellow);
+}
+
+.btn-app-outline:hover {
+  background: var(--yellow-glow);
+  box-shadow: 0 0 18px var(--yellow-glow);
+  transform: translateY(-1px);
+}
+
+/* Pickleball bounce on hover */
+.btn-ball {
+  display: inline-block;
+  font-size: 1rem;
+  transition: transform 0.2s;
+}
+
+.btn-app:hover .btn-ball {
+  animation: pickleball-bounce 0.5s ease infinite;
+}
+
+@keyframes pickleball-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-6px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(-3px);
+  }
+}
+
+/* ---------- BODY (sidebar + content) ---------- */
+.layout-body {
+  display: flex;
+  flex: 1;
+  min-height: calc(100vh - var(--header-height) - var(--footer-height));
+}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar {
+  width: var(--sidebar-width);
+  background: var(--black-light);
+  border-right: 2px solid var(--black-lighter);
+  padding: 20px 0;
+  flex-shrink: 0;
+}
+
+.sidebar-nav {
+  padding: 0 16px;
+}
+
+.sidebar-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+  color: var(--gray-dark);
+  text-align: center;
+}
+
+.sidebar-empty-icon {
+  font-size: 2.5rem;
+  margin-bottom: 8px;
+  opacity: 0.4;
+}
+
+.sidebar-empty p {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-family: var(--font-heading);
+  color: var(--gray-dark);
+}
+
+/* ---------- MAIN CONTENT ---------- */
+.main-content {
+  flex: 1;
+  padding: 32px;
+  background: var(--black);
+  overflow-y: auto;
+}
+
+/* ---------- FOOTER ---------- */
+.footer {
+  height: var(--footer-height);
+  background: var(--black-light);
+  border-top: 2px solid var(--black-lighter);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  font-size: 0.75rem;
+  color: var(--gray-dark);
+}
+
+.footer-tagline {
+  font-family: var(--font-heading);
+  letter-spacing: 1.5px;
+  font-size: 0.85rem;
+  color: var(--yellow-dark);
+}
