@@ -97,3 +97,22 @@ export const getVendorBookings = () =>
 
 export const respondToBooking = (id: string, data: { status: string; vendorResponse?: string }) =>
   request<any>(`/api/bookings/${id}/respond`, { method: "PUT", body: JSON.stringify(data) });
+
+// Messages
+export const searchUsers = (q: string) =>
+  request<any[]>(`/api/messages/users/search?q=${encodeURIComponent(q)}`);
+
+export const getConversations = () =>
+  request<any[]>("/api/messages/conversations");
+
+export const createConversation = (data: { type: "dm" | "group"; name?: string; participantUids: string[] }) =>
+  request<any>("/api/messages/conversations", { method: "POST", body: JSON.stringify(data) });
+
+export const getMessages = (conversationId: string) =>
+  request<any[]>(`/api/messages/conversations/${conversationId}/messages`);
+
+export const sendMessage = (conversationId: string, text: string) =>
+  request<any>(`/api/messages/conversations/${conversationId}/messages`, {
+    method: "POST",
+    body: JSON.stringify({ text }),
+  });

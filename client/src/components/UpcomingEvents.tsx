@@ -132,12 +132,12 @@ const UpcomingEvents: React.FC = () => {
               </div>
 
               <div className="ue-item-what">
-                <span className="ue-role-badge">
+                <span className={`ue-role-pill ${isVendorSession ? "ue-role-teaching" : "ue-role-learning"}`}>
                   {isVendorSession ? "🏫 Teaching" : "🎓 Learning"}
                 </span>
                 <span className="ue-item-course">{event.courseTitle}</span>
                 <span className="ue-item-with">
-                  with {isVendorSession ? event.userName : event.vendorName}
+                  {isVendorSession ? `Student: ${event.userName}` : `Instructor: ${event.vendorName}`}
                 </span>
               </div>
 

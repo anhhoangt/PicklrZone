@@ -125,12 +125,24 @@
   gap: 2px;
 }
 
-.ue-role-badge {
-  font-size: 0.65rem;
+.ue-role-pill {
+  display: inline-block;
+  font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: var(--gray-dark);
+  padding: 3px 10px;
+  border-radius: 5px;
+}
+
+.ue-role-teaching {
+  background: rgba(99, 102, 241, 0.15);
+  color: #818cf8;
+}
+
+.ue-role-learning {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
 }
 
 .ue-item-course {

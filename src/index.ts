@@ -9,6 +9,7 @@ import userRoutes from "./routes/userRoutes";
 import paymentRoutes from "./routes/paymentRoutes";
 import submissionRoutes from "./routes/submissionRoutes";
 import bookingRoutes from "./routes/bookingRoutes";
+import messageRoutes from "./routes/messageRoutes";
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/submissions", submissionRoutes);
 app.use("/api/bookings", bookingRoutes);
+app.use("/api/messages", messageRoutes);
 
 app.get("/", (_req, res) => {
   res.json({ message: "Welcome to the PicklrZone API 🏓" });

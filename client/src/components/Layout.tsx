@@ -96,6 +96,16 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             </Link>
 
             {currentUser && (
+              <Link
+                to="/messages"
+                className={`sidebar-link ${isActive("/messages") ? "sidebar-link-active" : ""}`}
+              >
+                <span className="sidebar-link-icon">💬</span>
+                Messages
+              </Link>
+            )}
+
+            {currentUser && (
               <>
                 <Link
                   to="/my-learning"

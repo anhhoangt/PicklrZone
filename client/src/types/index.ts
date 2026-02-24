@@ -122,3 +122,29 @@ export interface Submission {
   createdAt: string;
   reviewedAt?: string;
 }
+
+export type ConversationType = "dm" | "group";
+
+export interface Conversation {
+  id: string;
+  type: ConversationType;
+  name?: string;
+  participants: string[];
+  participantNames: Record<string, string>;
+  participantPhotos: Record<string, string>;
+  lastMessage?: string;
+  lastMessageBy?: string;
+  lastMessageAt?: string;
+  createdBy: string;
+  createdAt: string;
+}
+
+export interface Message {
+  id: string;
+  conversationId: string;
+  senderId: string;
+  senderName: string;
+  senderPhotoURL?: string;
+  text: string;
+  createdAt: string;
+}

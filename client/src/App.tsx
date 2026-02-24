@@ -15,6 +15,7 @@ import Cart from "./pages/Cart";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
 import CourseLearning from "./pages/CourseLearning";
 import MyLearning from "./pages/MyLearning";
+import Messages from "./pages/Messages";
 
 const App: React.FC = () => {
   return (
@@ -38,6 +39,10 @@ const App: React.FC = () => {
               <Route
                 path="/my-learning"
                 element={<ProtectedRoute><MyLearning /></ProtectedRoute>}
+              />
+              <Route
+                path="/messages"
+                element={<ProtectedRoute><Messages /></ProtectedRoute>}
               />
               <Route
                 path="/learn/:courseId"
