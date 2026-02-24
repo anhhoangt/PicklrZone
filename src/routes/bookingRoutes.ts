@@ -9,10 +9,10 @@ const router = Router();
 router.post("/:courseId", verifyToken, async (req: AuthRequest, res: Response) => {
   try {
     const courseId = req.params.courseId as string;
-    const { requestedDate, message } = req.body;
+    const { requestedDate, requestedEndTime, message } = req.body;
 
-    if (!requestedDate || !message) {
-      res.status(400).json({ message: "Date and message are required" });
+    if (!requestedDate || !requestedEndTime || !message) {
+      res.status(400).json({ message: "Start time, end time, and message are required" });
       return;
     }
 
@@ -47,6 +47,7 @@ router.post("/:courseId", verifyToken, async (req: AuthRequest, res: Response) =
       vendorId: courseData.vendorId,
       vendorName: courseData.vendorName,
       requestedDate,
+      requestedEndTime,
       message,
       status: "pending",
       createdAt: new Date().toISOString(),

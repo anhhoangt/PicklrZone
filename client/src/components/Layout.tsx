@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useCart } from "../contexts/CartContext";
+import UpcomingEvents from "./UpcomingEvents";
 import "./Layout.css";
 
 interface LayoutProps {
@@ -9,7 +10,7 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const { currentUser, logout } = useAuth();
+  const { currentUser, userRole, logout } = useAuth();
   const { itemCount } = useCart();
   const navigate = useNavigate();
   const location = useLocation();
@@ -112,21 +113,15 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   My Profile
                 </Link>
 
-                <Link
-                  to="/vendor/dashboard"
-                  className={`sidebar-link ${isActive("/vendor/dashboard") ? "sidebar-link-active" : ""}`}
-                >
-                  <span className="sidebar-link-icon">🏪</span>
-                  My Courses
-                </Link>
-
-                <Link
-                  to="/vendor/reviews"
-                  className={`sidebar-link ${isActive("/vendor/reviews") ? "sidebar-link-active" : ""}`}
-                >
-                  <span className="sidebar-link-icon">🎥</span>
-                  Student Reviews
-                </Link>
+                {userRole === "vendor" && (
+                  <Link
+                    to="/vendor/dashboard"
+                    className={`sidebar-link ${isActive("/vendor/dashboard") ? "sidebar-link-active" : ""}`}
+                  >
+                    <span className="sidebar-link-icon">🏪</span>
+                    My Courses
+                  </Link>
+                )}
               </>
             )}
 
@@ -145,7 +140,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         </aside>
 
         {/* MAIN CONTENT */}
-        <main className="main-content">{children}</main>
+        <main className="main-content">
+          <UpcomingEvents />
+          {children}
+        </main>
       </div>
 
       {/* FOOTER */}

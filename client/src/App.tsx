@@ -14,7 +14,6 @@ import Profile from "./pages/Profile";
 import Cart from "./pages/Cart";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
 import CourseLearning from "./pages/CourseLearning";
-import VendorReviews from "./pages/VendorReviews";
 import MyLearning from "./pages/MyLearning";
 
 const App: React.FC = () => {
@@ -59,10 +58,6 @@ const App: React.FC = () => {
               <Route
                 path="/vendor/courses/:id/edit"
                 element={<ProtectedRoute><CourseForm /></ProtectedRoute>}
-              />
-              <Route
-                path="/vendor/reviews"
-                element={<ProtectedRoute><VendorReviews /></ProtectedRoute>}
               />
 
               {/* Default redirect */}

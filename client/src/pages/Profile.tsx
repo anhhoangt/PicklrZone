@@ -5,7 +5,7 @@ import { useAuth } from "../contexts/AuthContext";
 import "./Profile.css";
 
 const Profile: React.FC = () => {
-  const { currentUser } = useAuth();
+  const { currentUser, refreshProfile } = useAuth();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -46,6 +46,7 @@ const Profile: React.FC = () => {
         photoURL: currentUser?.photoURL || "",
       });
       setSuccess(true);
+      await refreshProfile();
       setTimeout(() => setSuccess(false), 3000);
     } catch (err: any) {
       setError(err.message || "Failed to save profile");

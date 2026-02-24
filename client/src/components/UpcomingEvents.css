@@ -1,0 +1,177 @@
+.upcoming-events {
+  background: linear-gradient(135deg, rgba(245, 211, 11, 0.08), rgba(245, 211, 11, 0.03));
+  border: 2px solid rgba(245, 211, 11, 0.25);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+}
+
+.ue-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.ue-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ue-bell {
+  font-size: 1.1rem;
+}
+
+.ue-header-left strong {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  color: var(--yellow);
+  letter-spacing: 1px;
+}
+
+.ue-count {
+  background: var(--yellow);
+  color: var(--black);
+  font-size: 0.65rem;
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ue-dismiss {
+  background: none;
+  border: none;
+  color: var(--gray-dark);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.15s;
+}
+
+.ue-dismiss:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--white);
+}
+
+/* Event list */
+.ue-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ue-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--black-light);
+  border: 1px solid var(--black-lighter);
+  border-radius: 10px;
+  padding: 12px 14px;
+  transition: border-color 0.15s;
+}
+
+.ue-item:hover {
+  border-color: var(--yellow-dark);
+}
+
+.ue-item-today {
+  border-color: rgba(245, 211, 11, 0.4);
+  background: rgba(245, 211, 11, 0.05);
+}
+
+/* When column */
+.ue-item-when {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 90px;
+  flex-shrink: 0;
+}
+
+.ue-day {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ue-day-today {
+  color: var(--yellow);
+  font-weight: 700;
+}
+
+.ue-time {
+  font-size: 0.8rem;
+  color: var(--yellow);
+  font-weight: 600;
+  margin-top: 2px;
+  text-align: center;
+}
+
+/* What column */
+.ue-item-what {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ue-role-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--gray-dark);
+}
+
+.ue-item-course {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ue-item-with {
+  font-size: 0.8rem;
+  color: var(--gray-dark);
+}
+
+/* Link */
+.ue-item-link {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--yellow);
+  text-decoration: none;
+  flex-shrink: 0;
+  padding: 4px 10px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+
+.ue-item-link:hover {
+  background: var(--yellow-glow);
+}
+
+@media (max-width: 600px) {
+  .ue-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .ue-item-when {
+    flex-direction: row;
+    gap: 8px;
+  }
+}

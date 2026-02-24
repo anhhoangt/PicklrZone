@@ -65,6 +65,7 @@ export interface Booking {
   vendorId: string;
   vendorName: string;
   requestedDate: string;
+  requestedEndTime: string;
   message: string;
   status: BookingStatus;
   vendorResponse?: string;

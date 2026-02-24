@@ -86,7 +86,7 @@ export const evaluateSubmission = (id: string, data: { vendorFeedback: string; v
   request<any>(`/api/submissions/${id}/evaluate`, { method: "PUT", body: JSON.stringify(data) });
 
 // Bookings
-export const createBooking = (courseId: string, data: { requestedDate: string; message: string }) =>
+export const createBooking = (courseId: string, data: { requestedDate: string; requestedEndTime: string; message: string }) =>
   request<any>(`/api/bookings/${courseId}`, { method: "POST", body: JSON.stringify(data) });
 
 export const getMyBookings = () =>

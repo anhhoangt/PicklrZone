@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
-  getCourse, getEnrollments, getMySubmissions, submitVideo, createBooking,
+  getCourse, getEnrollments, getMySubmissions, getMyBookings, submitVideo, createBooking,
 } from "../services/api";
-import { Course, Lesson, Submission } from "../types";
+import { Course, Lesson, Submission, Booking } from "../types";
 import VideoPlayer from "../components/VideoPlayer";
 import StarRating from "../components/StarRating";
 import { useAuth } from "../contexts/AuthContext";
@@ -31,7 +31,10 @@ const CourseLearning: React.FC = () => {
   const [submitError, setSubmitError] = useState("");
 
   // Booking
+  const [bookings, setBookings] = useState<Booking[]>([]);
   const [bookDate, setBookDate] = useState("");
+  const [bookStartTime, setBookStartTime] = useState("");
+  const [bookDuration, setBookDuration] = useState("30");
   const [bookMessage, setBookMessage] = useState("");
   const [bookLoading, setBookLoading] = useState(false);
   const [bookSuccess, setBookSuccess] = useState(false);
@@ -58,6 +61,11 @@ const CourseLearning: React.FC = () => {
         try {
           const subs = await getMySubmissions(courseId!);
           setSubmissions(subs);
+        } catch {}
+
+        try {
+          const allBookings = await getMyBookings();
+          setBookings(allBookings.filter((b: Booking) => b.courseId === courseId));
         } catch {}
       } catch (err) {
         console.error("Failed to load course", err);
@@ -107,12 +115,23 @@ const CourseLearning: React.FC = () => {
 
   const handleBookSession = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!bookDate || !bookMessage.trim()) { setBookError("Date and message required"); return; }
+    if (!bookDate || !bookStartTime || !bookMessage.trim()) { setBookError("Date, start time, and message are required"); return; }
+    const [hours, mins] = bookStartTime.split(":").map(Number);
+    const totalMins = hours * 60 + mins + Number(bookDuration);
+    const endH = String(Math.floor(totalMins / 60) % 24).padStart(2, "0");
+    const endM = String(totalMins % 60).padStart(2, "0");
+    const endTime = `${endH}:${endM}`;
     setBookLoading(true);
     setBookError("");
     try {
-      await createBooking(courseId!, { requestedDate: bookDate, message: bookMessage });
+      await createBooking(courseId!, {
+        requestedDate: `${bookDate}T${bookStartTime}`,
+        requestedEndTime: `${bookDate}T${endTime}`,
+        message: bookMessage,
+      });
       setBookDate("");
+      setBookStartTime("");
+      setBookDuration("30");
       setBookMessage("");
       setBookSuccess(true);
     } catch (err: any) {
@@ -320,15 +339,38 @@ const CourseLearning: React.FC = () => {
             ) : (
               <form onSubmit={handleBookSession} className="cl-form">
                 {bookError && <div className="cl-error">{bookError}</div>}
-                <label className="form-label">
-                  Preferred Date & Time
-                  <input
-                    type="datetime-local"
-                    value={bookDate}
-                    onChange={(e) => setBookDate(e.target.value)}
-                    required
-                  />
-                </label>
+              <div className="cl-form-row">
+                  <label className="form-label">
+                    Preferred Date
+                    <input
+                      type="date"
+                      value={bookDate}
+                      onChange={(e) => setBookDate(e.target.value)}
+                      min={new Date().toISOString().split("T")[0]}
+                      required
+                    />
+                  </label>
+                  <label className="form-label">
+                    Start Time
+                    <input
+                      type="time"
+                      value={bookStartTime}
+                      onChange={(e) => setBookStartTime(e.target.value)}
+                      required
+                    />
+                  </label>
+                  <label className="form-label">
+                    Duration
+                    <select value={bookDuration} onChange={(e) => setBookDuration(e.target.value)}>
+                      <option value="15">15 minutes</option>
+                      <option value="30">30 minutes</option>
+                      <option value="45">45 minutes</option>
+                      <option value="60">1 hour</option>
+                      <option value="90">1.5 hours</option>
+                      <option value="120">2 hours</option>
+                    </select>
+                  </label>
+                </div>
                 <label className="form-label">
                   What would you like to work on?
                   <textarea
@@ -344,6 +386,61 @@ const CourseLearning: React.FC = () => {
                   {bookLoading ? "Sending..." : "Request Session"}
                 </button>
               </form>
+            )}
+
+            {/* Past bookings */}
+            {bookings.length > 0 && (
+              <div className="cl-past-bookings">
+                <h3>Your Booking Requests ({bookings.length})</h3>
+                {bookings.map((booking) => (
+                  <div key={booking.id} className={`cl-booking-card cl-booking-${booking.status}`}>
+                    <div className="cl-booking-top">
+                      <span className={`cl-booking-badge cl-booking-badge-${booking.status}`}>
+                        {booking.status === "pending" && "⏳ Pending"}
+                        {booking.status === "confirmed" && "✅ Confirmed"}
+                        {booking.status === "declined" && "❌ Declined"}
+                      </span>
+                      <span className="cl-booking-date">
+                        Requested {new Date(booking.createdAt).toLocaleDateString()}
+                      </span>
+                    </div>
+
+                    <div className="cl-booking-details">
+                      <div className="cl-booking-detail-row">
+                        <span className="cl-booking-label">📅 Session</span>
+                        <span className="cl-booking-value">
+                          {new Date(booking.requestedDate).toLocaleDateString()},{" "}
+                          {new Date(booking.requestedDate).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                          {" — "}
+                          {booking.requestedEndTime
+                            ? new Date(booking.requestedEndTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+                            : ""}
+                        </span>
+                      </div>
+                      <div className="cl-booking-detail-row">
+                        <span className="cl-booking-label">💬 Your Message</span>
+                        <span className="cl-booking-value">{booking.message}</span>
+                      </div>
+                    </div>
+
+                    {booking.vendorResponse && (
+                      <div className={`cl-booking-response cl-booking-response-${booking.status}`}>
+                        <strong>
+                          {booking.status === "confirmed" ? "🎉" : "💬"} Instructor Response:
+                        </strong>
+                        <p>{booking.vendorResponse}</p>
+                      </div>
+                    )}
+
+                    {booking.status === "confirmed" && !booking.vendorResponse && (
+                      <div className="cl-booking-response cl-booking-response-confirmed">
+                        <strong>🎉 Session Confirmed!</strong>
+                        <p>{course.vendorName} confirmed your training session. Get ready to level up!</p>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
             )}
           </div>
         )}

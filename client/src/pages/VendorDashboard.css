@@ -3,12 +3,7 @@
 }
 
 .vendor-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
-  gap: 16px;
+  margin-bottom: 20px;
 }
 
 .vendor-header h1 {
@@ -19,10 +14,70 @@
   margin: 0;
 }
 
-.vendor-header p {
+/* Tabs */
+.vd-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--black-light);
+  border-radius: 10px;
+  padding: 4px;
+  border: 2px solid var(--black-lighter);
+  margin-bottom: 20px;
+}
+
+.vd-tab {
+  flex: 1;
+  padding: 11px 14px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gray);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.15s;
+}
+
+.vd-tab:hover { color: var(--white); }
+
+.vd-tab-active {
+  background: var(--yellow);
+  color: var(--black);
+}
+
+.vd-tab-badge {
+  background: #f87171;
+  color: white;
+  font-size: 0.6rem;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vd-tab-active .vd-tab-badge {
+  background: var(--black);
+  color: var(--yellow);
+}
+
+.vendor-courses-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.vendor-courses-header p {
   color: var(--gray);
   font-size: 0.85rem;
-  margin: 2px 0 0;
+  margin: 0;
 }
 
 .vendor-loading,
@@ -166,4 +221,389 @@
 
 .btn-danger:hover:not(:disabled) {
   background: rgba(248, 113, 113, 0.15);
+}
+
+/* ===== STUDENT REVIEWS TAB ===== */
+.vd-review-group {
+  margin-bottom: 24px;
+}
+
+.vd-review-group h2 {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  color: var(--white);
+  letter-spacing: 0.5px;
+  margin: 0 0 12px;
+}
+
+.vd-review-card {
+  background: var(--black-light);
+  border: 2px solid var(--black-lighter);
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 12px;
+}
+
+.vd-card-pending { border-color: rgba(245, 211, 11, 0.3); }
+.vd-card-reviewed { border-color: rgba(34, 197, 94, 0.3); }
+
+.vd-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.vd-student-name {
+  display: block;
+  font-weight: 600;
+  color: var(--white);
+  font-size: 0.95rem;
+}
+
+.vd-course-name {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--gray-dark);
+  margin-top: 2px;
+}
+
+.vd-badge {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.vd-badge-pending { color: var(--yellow); background: rgba(245, 211, 11, 0.1); }
+.vd-badge-reviewed { color: #4ade80; background: rgba(34, 197, 94, 0.1); }
+
+.vd-card-details p {
+  color: var(--gray);
+  font-size: 0.9rem;
+  margin: 3px 0;
+}
+
+.vd-card-video {
+  margin-bottom: 12px;
+}
+
+.vd-card-notes {
+  color: var(--gray);
+  font-size: 0.85rem;
+  margin: 0 0 12px;
+}
+
+.vd-error {
+  background: rgba(220, 38, 38, 0.15);
+  color: #f87171;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+}
+
+/* Eval form */
+.vd-eval-form {
+  background: var(--black);
+  border: 1px solid var(--black-lighter);
+  border-radius: 10px;
+  padding: 16px;
+  margin-top: 12px;
+}
+
+.vd-eval-rating {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+  color: var(--gray);
+}
+
+.vd-eval-form textarea {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--black-light);
+  border: 2px solid var(--black-lighter);
+  border-radius: 8px;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  resize: vertical;
+  outline: none;
+  margin-bottom: 12px;
+}
+
+.vd-eval-form textarea:focus { border-color: var(--yellow); }
+
+.vd-eval-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* Respond form */
+.vd-respond-form {
+  margin-top: 12px;
+}
+
+.vd-respond-form textarea {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--black);
+  border: 2px solid var(--black-lighter);
+  border-radius: 8px;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  resize: vertical;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+.vd-respond-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Feedback box */
+.vd-feedback-box {
+  background: rgba(34, 197, 94, 0.05);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: 8px;
+  padding: 14px;
+  margin-top: 12px;
+}
+
+.vd-feedback-box strong {
+  color: #4ade80;
+  font-size: 0.85rem;
+}
+
+.vd-fb-rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 6px 0;
+  font-size: 0.85rem;
+  color: var(--yellow);
+}
+
+.vd-feedback-box p {
+  color: var(--gray);
+  font-size: 0.9rem;
+  margin: 6px 0 0;
+}
+
+/* ===== SCHEDULE TAB ===== */
+.vd-schedule-group {
+  margin-bottom: 28px;
+}
+
+.vd-schedule-group h2 {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  color: var(--yellow);
+  letter-spacing: 0.5px;
+  margin: 0 0 14px;
+}
+
+.vd-schedule-card {
+  display: flex;
+  gap: 18px;
+  background: var(--black-light);
+  border: 2px solid var(--black-lighter);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 10px;
+  align-items: flex-start;
+}
+
+.vd-schedule-upcoming {
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.vd-schedule-past {
+  opacity: 0.6;
+}
+
+.vd-schedule-date-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--black);
+  border: 2px solid var(--black-lighter);
+  border-radius: 10px;
+  padding: 10px 14px;
+  min-width: 70px;
+  flex-shrink: 0;
+}
+
+.vd-schedule-upcoming .vd-schedule-date-col {
+  border-color: var(--yellow-dark);
+}
+
+.vd-schedule-month {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--yellow);
+}
+
+.vd-schedule-day {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  color: var(--white);
+  line-height: 1;
+  margin: 2px 0;
+}
+
+.vd-schedule-time {
+  font-size: 0.75rem;
+  color: var(--gray);
+  font-weight: 500;
+}
+
+.vd-schedule-timerange {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  margin-top: 4px;
+}
+
+.vd-schedule-start {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--yellow);
+}
+
+.vd-schedule-arrow {
+  font-size: 0.65rem;
+  color: var(--gray-dark);
+  line-height: 1;
+}
+
+.vd-schedule-end {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--yellow);
+}
+
+.vd-schedule-duration {
+  font-size: 0.65rem;
+  color: var(--gray-dark);
+  background: var(--black-lighter);
+  border-radius: 4px;
+  padding: 1px 6px;
+  margin-top: 4px;
+}
+
+.vd-schedule-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.vd-schedule-student {
+  display: block;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--white);
+  margin-bottom: 2px;
+}
+
+.vd-schedule-course {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--gray-dark);
+  margin-bottom: 8px;
+}
+
+.vd-schedule-msg {
+  font-size: 0.85rem;
+  color: var(--gray);
+  margin: 0 0 4px;
+  line-height: 1.4;
+}
+
+.vd-schedule-response {
+  font-size: 0.8rem;
+  color: var(--gray-dark);
+  font-style: italic;
+  margin: 4px 0 0;
+}
+
+.vd-tab-badge-green {
+  background: #4ade80;
+  color: var(--black);
+}
+
+/* Schedule card variants */
+.vd-schedule-confirmed {
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.vd-schedule-pending {
+  border-color: rgba(245, 211, 11, 0.3);
+  border-style: dashed;
+}
+
+.vd-schedule-overlap {
+  border-color: #f87171 !important;
+  border-style: solid !important;
+}
+
+.vd-schedule-info-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 6px;
+}
+
+.vd-schedule-status {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+
+.vd-schedule-status-confirmed {
+  color: #4ade80;
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.vd-schedule-status-pending {
+  color: var(--yellow);
+  background: rgba(245, 211, 11, 0.1);
+}
+
+.vd-schedule-time-block {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--yellow);
+  margin-bottom: 6px;
+}
+
+.vd-overlap-warning {
+  background: rgba(248, 113, 113, 0.1);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin: 8px 0;
+  font-size: 0.85rem;
+  color: #f87171;
+  line-height: 1.5;
+}
+
+.vd-overlap-warning strong {
+  color: #f87171;
+}
+
+.vd-overlap-warning span {
+  display: inline;
+  color: var(--gray);
+  font-size: 0.8rem;
 }

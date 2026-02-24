@@ -18,10 +18,59 @@
   margin: 0;
 }
 
-.ml-subtitle {
+/* Tabs */
+.ml-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--black-light);
+  border-radius: 10px;
+  padding: 4px;
+  border: 2px solid var(--black-lighter);
+  margin-bottom: 20px;
+}
+
+.ml-tab {
+  flex: 1;
+  padding: 11px 14px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
   color: var(--gray);
-  font-size: 0.9rem;
-  margin: 2px 0 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.15s;
+}
+
+.ml-tab:hover {
+  color: var(--white);
+}
+
+.ml-tab-active {
+  background: var(--yellow);
+  color: var(--black);
+}
+
+.ml-tab-badge {
+  background: #f87171;
+  color: white;
+  font-size: 0.6rem;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ml-tab-active .ml-tab-badge {
+  background: var(--black);
+  color: var(--yellow);
 }
 
 /* Stats bar */
@@ -325,4 +374,152 @@
     align-items: flex-start;
     gap: 10px;
   }
+}
+
+/* ===== ACTIVITY TAB ===== */
+.ml-activity-section {
+  margin-bottom: 28px;
+}
+
+.ml-activity-section h2 {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  color: var(--yellow);
+  letter-spacing: 1px;
+  margin: 0 0 14px;
+}
+
+.ml-act-group {
+  margin-bottom: 20px;
+}
+
+.ml-act-group h3 {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  color: var(--white);
+  letter-spacing: 0.5px;
+  margin: 0 0 10px;
+}
+
+.ml-act-card {
+  background: var(--black-light);
+  border: 2px solid var(--black-lighter);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 10px;
+}
+
+.ml-act-reviewed { border-color: rgba(34, 197, 94, 0.3); }
+.ml-act-confirmed { border-color: rgba(34, 197, 94, 0.3); }
+.ml-act-declined { border-color: rgba(248, 113, 113, 0.2); }
+
+.ml-act-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.ml-act-course {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  color: var(--white);
+  letter-spacing: 0.5px;
+}
+
+.ml-act-sub {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--gray-dark);
+  margin-top: 2px;
+}
+
+.ml-act-badge {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.ml-act-badge-pending { color: var(--yellow); background: rgba(245, 211, 11, 0.1); }
+.ml-act-badge-confirmed { color: #4ade80; background: rgba(34, 197, 94, 0.1); }
+.ml-act-badge-declined { color: #f87171; background: rgba(248, 113, 113, 0.1); }
+.ml-act-badge-reviewed { color: #4ade80; background: rgba(34, 197, 94, 0.1); }
+
+.ml-act-details p {
+  color: var(--gray);
+  font-size: 0.9rem;
+  margin: 3px 0;
+}
+
+.ml-act-response {
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 10px;
+  border: 1px solid var(--black-lighter);
+}
+
+.ml-act-response-confirmed { background: rgba(34, 197, 94, 0.05); border-color: rgba(34, 197, 94, 0.2); }
+.ml-act-response-declined { background: rgba(248, 113, 113, 0.05); border-color: rgba(248, 113, 113, 0.2); }
+
+.ml-act-response strong {
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+}
+
+.ml-act-response-confirmed strong { color: #4ade80; }
+.ml-act-response-declined strong { color: #f87171; }
+
+.ml-act-response p {
+  font-size: 0.9rem;
+  color: var(--gray);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.ml-act-video {
+  margin-bottom: 10px;
+}
+
+.ml-act-notes {
+  color: var(--gray);
+  font-size: 0.85rem;
+  margin: 0 0 10px;
+}
+
+.ml-act-feedback {
+  background: rgba(34, 197, 94, 0.05);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.ml-act-fb-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.ml-act-fb-header strong {
+  color: #4ade80;
+  font-size: 0.85rem;
+}
+
+.ml-act-fb-rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--yellow);
+}
+
+.ml-act-feedback p {
+  color: var(--gray);
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.5;
 }
