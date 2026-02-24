@@ -1,6 +1,7 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { useCart } from "../contexts/CartContext";
 import "./Layout.css";
 
 interface LayoutProps {
@@ -9,12 +10,16 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { currentUser, logout } = useAuth();
+  const { itemCount } = useCart();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = async () => {
     await logout();
     navigate("/login");
   };
+
+  const isActive = (path: string) => location.pathname === path;
 
   return (
     <div className="layout">
@@ -26,6 +31,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         </Link>
 
         <div className="header-right">
+          {/* Cart icon */}
+          <Link to="/cart" className="header-cart">
+            <span className="header-cart-icon">🛒</span>
+            {itemCount > 0 && <span className="header-cart-badge">{itemCount}</span>}
+          </Link>
+
           {currentUser ? (
             <div className="header-user">
               <div className="header-avatar">
@@ -66,11 +77,70 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         {/* SIDEBAR */}
         <aside className="sidebar">
           <nav className="sidebar-nav">
-            {/* No tabs yet — placeholder */}
-            <div className="sidebar-empty">
-              <span className="sidebar-empty-icon">🏓</span>
-              <p>Coming soon</p>
-            </div>
+            <Link
+              to="/courses"
+              className={`sidebar-link ${isActive("/courses") ? "sidebar-link-active" : ""}`}
+            >
+              <span className="sidebar-link-icon">📚</span>
+              Courses
+            </Link>
+
+            <Link
+              to="/cart"
+              className={`sidebar-link ${isActive("/cart") ? "sidebar-link-active" : ""}`}
+            >
+              <span className="sidebar-link-icon">🛒</span>
+              Cart
+              {itemCount > 0 && <span className="sidebar-badge">{itemCount}</span>}
+            </Link>
+
+            {currentUser && (
+              <>
+                <Link
+                  to="/my-learning"
+                  className={`sidebar-link ${isActive("/my-learning") ? "sidebar-link-active" : ""}`}
+                >
+                  <span className="sidebar-link-icon">🎓</span>
+                  My Learning
+                </Link>
+
+                <Link
+                  to="/profile"
+                  className={`sidebar-link ${isActive("/profile") ? "sidebar-link-active" : ""}`}
+                >
+                  <span className="sidebar-link-icon">👤</span>
+                  My Profile
+                </Link>
+
+                <Link
+                  to="/vendor/dashboard"
+                  className={`sidebar-link ${isActive("/vendor/dashboard") ? "sidebar-link-active" : ""}`}
+                >
+                  <span className="sidebar-link-icon">🏪</span>
+                  My Courses
+                </Link>
+
+                <Link
+                  to="/vendor/reviews"
+                  className={`sidebar-link ${isActive("/vendor/reviews") ? "sidebar-link-active" : ""}`}
+                >
+                  <span className="sidebar-link-icon">🎥</span>
+                  Student Reviews
+                </Link>
+              </>
+            )}
+
+            <div className="sidebar-divider" />
+
+            {!currentUser && (
+              <div className="sidebar-cta">
+                <p>Log in to access all features</p>
+                <Link to="/login" className="btn-app btn-app-filled btn-sm sidebar-cta-btn">
+                  <span className="btn-ball">🏓</span>
+                  Get Started
+                </Link>
+              </div>
+            )}
           </nav>
         </aside>
 

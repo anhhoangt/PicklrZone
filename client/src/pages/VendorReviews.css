@@ -1,0 +1,279 @@
+.vendor-reviews {
+  max-width: 900px;
+}
+
+.vendor-reviews h1 {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  color: var(--yellow);
+  letter-spacing: 2px;
+  margin: 0 0 20px;
+}
+
+.vr-loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--gray-dark);
+}
+
+.vr-loading .bounce-ball {
+  font-size: 3rem;
+  display: block;
+  animation: pickleball-bounce 0.5s ease infinite;
+  margin-bottom: 12px;
+}
+
+/* Tabs */
+.vr-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  background: var(--black-light);
+  border-radius: 10px;
+  padding: 4px;
+  border: 2px solid var(--black-lighter);
+}
+
+.vr-tab {
+  flex: 1;
+  padding: 10px 16px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--gray);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.15s;
+}
+
+.vr-tab:hover {
+  color: var(--white);
+}
+
+.vr-tab-active {
+  background: var(--yellow);
+  color: var(--black);
+}
+
+.vr-tab-badge {
+  background: #f87171;
+  color: white;
+  font-size: 0.65rem;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vr-tab-active .vr-tab-badge {
+  background: var(--black);
+  color: var(--yellow);
+}
+
+/* Content */
+.vr-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--gray-dark);
+}
+
+.vr-empty span {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.vr-group {
+  margin-bottom: 28px;
+}
+
+.vr-group h2 {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  color: var(--white);
+  letter-spacing: 0.5px;
+  margin: 0 0 14px;
+}
+
+/* Cards */
+.vr-card {
+  background: var(--black-light);
+  border: 2px solid var(--black-lighter);
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 14px;
+}
+
+.vr-card-pending {
+  border-color: rgba(245, 211, 11, 0.3);
+}
+
+.vr-card-reviewed {
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.vr-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.vr-student-name {
+  display: block;
+  font-weight: 600;
+  color: var(--white);
+  font-size: 0.95rem;
+}
+
+.vr-course-name {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--gray-dark);
+  margin-top: 2px;
+}
+
+.vr-date {
+  font-size: 0.75rem;
+  color: var(--gray-dark);
+}
+
+.vr-video {
+  margin-bottom: 12px;
+}
+
+.vr-notes {
+  color: var(--gray);
+  font-size: 0.85rem;
+  margin: 0 0 14px;
+}
+
+/* Eval form */
+.vr-eval-form {
+  background: var(--black);
+  border: 1px solid var(--black-lighter);
+  border-radius: 10px;
+  padding: 16px;
+  margin-top: 12px;
+}
+
+.vr-eval-rating {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+  color: var(--gray);
+}
+
+.vr-eval-form textarea {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--black-light);
+  border: 2px solid var(--black-lighter);
+  border-radius: 8px;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  resize: vertical;
+  outline: none;
+  margin-bottom: 12px;
+}
+
+.vr-eval-form textarea:focus {
+  border-color: var(--yellow);
+}
+
+.vr-eval-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* Feedback */
+.vr-feedback-box {
+  background: rgba(34, 197, 94, 0.05);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: 8px;
+  padding: 14px;
+  margin-top: 12px;
+}
+
+.vr-feedback-box strong {
+  color: #4ade80;
+  font-size: 0.85rem;
+}
+
+.vr-fb-rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 6px 0;
+  font-size: 0.85rem;
+  color: var(--yellow);
+}
+
+.vr-feedback-box p {
+  color: var(--gray);
+  font-size: 0.9rem;
+  margin: 6px 0 0;
+}
+
+/* Bookings */
+.vr-booking-details {
+  margin-bottom: 14px;
+}
+
+.vr-booking-details p {
+  color: var(--gray);
+  font-size: 0.9rem;
+  margin: 4px 0;
+}
+
+.vr-booking-status {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.vr-bs-pending { color: var(--yellow); }
+.vr-bs-confirmed { color: #4ade80; }
+.vr-bs-declined { color: #f87171; }
+
+.vr-booking-confirmed { border-color: rgba(34, 197, 94, 0.3); }
+.vr-booking-declined { border-color: rgba(248, 113, 113, 0.2); }
+
+.vr-respond-form {
+  margin-top: 12px;
+}
+
+.vr-respond-form textarea {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--black);
+  border: 2px solid var(--black-lighter);
+  border-radius: 8px;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  resize: vertical;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+.vr-respond-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.vr-vendor-response {
+  color: var(--gray);
+  font-size: 0.85rem;
+  margin-top: 10px;
+}

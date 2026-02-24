@@ -1,0 +1,42 @@
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--black);
+  border: 2px solid var(--black-lighter);
+}
+
+.video-wrapper iframe,
+.video-wrapper video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.video-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  background: var(--black-lighter);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 2px solid var(--black-lighter);
+}
+
+.video-placeholder span {
+  font-size: 3rem;
+  opacity: 0.4;
+}
+
+.video-placeholder p {
+  color: var(--gray-dark);
+  font-size: 0.85rem;
+}

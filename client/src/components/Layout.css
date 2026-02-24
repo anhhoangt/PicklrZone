@@ -118,6 +118,51 @@
   gap: 10px;
 }
 
+/* Cart icon in header */
+.header-cart {
+  position: relative;
+  text-decoration: none;
+  font-size: 1.3rem;
+  margin-right: 16px;
+  padding: 4px;
+  transition: transform 0.2s;
+}
+
+.header-cart:hover {
+  transform: scale(1.15);
+}
+
+.header-cart-icon {
+  line-height: 1;
+}
+
+.header-cart-badge {
+  position: absolute;
+  top: -4px;
+  right: -8px;
+  background: var(--yellow);
+  color: var(--black);
+  font-size: 0.65rem;
+  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Sidebar badge */
+.sidebar-badge {
+  background: var(--yellow);
+  color: var(--black);
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 10px;
+  margin-left: auto;
+}
+
 /* ---------- BUTTONS ---------- */
 .btn-app {
   position: relative;
@@ -206,28 +251,56 @@
   padding: 0 16px;
 }
 
-.sidebar-empty {
+.sidebar-link {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 40px 0;
-  color: var(--gray-dark);
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--gray);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.15s;
+  margin-bottom: 4px;
+}
+
+.sidebar-link:hover {
+  background: var(--yellow-glow);
+  color: var(--yellow);
+}
+
+.sidebar-link-active {
+  background: var(--yellow-glow);
+  color: var(--yellow);
+  border-left: 3px solid var(--yellow);
+}
+
+.sidebar-link-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.sidebar-divider {
+  height: 1px;
+  background: var(--black-lighter);
+  margin: 16px 0;
+}
+
+.sidebar-cta {
   text-align: center;
+  padding: 12px 0;
 }
 
-.sidebar-empty-icon {
-  font-size: 2.5rem;
-  margin-bottom: 8px;
-  opacity: 0.4;
-}
-
-.sidebar-empty p {
+.sidebar-cta p {
   font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  font-family: var(--font-heading);
   color: var(--gray-dark);
+  margin-bottom: 10px;
+}
+
+.sidebar-cta-btn {
+  width: 100%;
+  justify-content: center;
 }
 
 /* ---------- MAIN CONTENT ---------- */

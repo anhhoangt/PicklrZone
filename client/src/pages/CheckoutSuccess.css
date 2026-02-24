@@ -1,0 +1,39 @@
+.checkout-result {
+  text-align: center;
+  padding: 60px 20px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.checkout-result .bounce-ball {
+  font-size: 3rem;
+  display: block;
+  animation: pickleball-bounce 0.5s ease infinite;
+  margin-bottom: 16px;
+}
+
+.checkout-icon {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.checkout-result h2 {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  color: var(--yellow);
+  letter-spacing: 1px;
+  margin: 0 0 10px;
+}
+
+.checkout-result p {
+  color: var(--gray);
+  font-size: 0.95rem;
+  margin: 0 0 24px;
+}
+
+.checkout-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
