@@ -138,13 +138,20 @@ router.post("/conversations", verifyToken, async (req: AuthRequest, res: Respons
       participantPhotos[uid] = userData?.photoURL || "";
     }
 
+    const now = new Date().toISOString();
+    const lastReadAt: Record<string, string> = {};
+    for (const uid of allParticipants) {
+      lastReadAt[uid] = now;
+    }
+
     const conversationData: Record<string, any> = {
       type,
       participants: allParticipants,
       participantNames,
       participantPhotos,
+      lastReadAt,
       createdBy: req.user!.uid,
-      createdAt: new Date().toISOString(),
+      createdAt: now,
     };
     if (type === "group" && name) {
       conversationData.name = name;
@@ -231,16 +238,45 @@ router.post("/conversations/:id/messages", verifyToken, async (req: AuthRequest,
 
     const msgRef = await convRef.collection("messages").add(messageData);
 
-    // Update conversation's last message
+    // Update conversation's last message and mark as read for sender
     await convRef.update({
       lastMessage: text.trim().substring(0, 100),
       lastMessageBy: req.user!.uid,
       lastMessageAt: now,
+      [`lastReadAt.${req.user!.uid}`]: now,
     });
 
     res.status(201).json({ id: msgRef.id, ...messageData });
   } catch (err) {
     res.status(500).json({ message: "Failed to send message", error: String(err) });
+  }
+});
+
+// PUT /api/messages/conversations/:id/read — mark conversation as read
+router.put("/conversations/:id/read", verifyToken, async (req: AuthRequest, res: Response) => {
+  try {
+    const conversationId = req.params.id as string;
+    const convRef = db.collection("conversations").doc(conversationId);
+    const convDoc = await convRef.get();
+
+    if (!convDoc.exists) {
+      res.status(404).json({ message: "Conversation not found" });
+      return;
+    }
+
+    const convData = convDoc.data()!;
+    if (!convData.participants.includes(req.user!.uid)) {
+      res.status(403).json({ message: "You are not a participant" });
+      return;
+    }
+
+    await convRef.update({
+      [`lastReadAt.${req.user!.uid}`]: new Date().toISOString(),
+    });
+
+    res.json({ message: "Marked as read" });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to mark as read", error: String(err) });
   }
 });
 

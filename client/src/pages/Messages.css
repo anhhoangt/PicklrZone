@@ -105,6 +105,37 @@
   border-left: 3px solid var(--yellow);
 }
 
+/* Unread conversation styles */
+.msg-conv-unread {
+  background: rgba(255, 214, 0, 0.05);
+}
+
+.msg-conv-name-unread {
+  font-weight: 800;
+  color: var(--white);
+}
+
+.msg-conv-preview-unread {
+  font-weight: 700;
+  color: var(--white);
+}
+
+.msg-conv-time-unread {
+  font-weight: 700;
+  color: var(--yellow);
+}
+
+.msg-unread-dot {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  width: 10px;
+  height: 10px;
+  background: var(--yellow);
+  border-radius: 50%;
+  border: 2px solid var(--black-light);
+}
+
 .msg-conv-avatar {
   width: 40px;
   height: 40px;
@@ -114,13 +145,14 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  overflow: hidden;
+  position: relative;
 }
 
 .msg-conv-avatar img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 50%;
 }
 
 .msg-conv-avatar span {

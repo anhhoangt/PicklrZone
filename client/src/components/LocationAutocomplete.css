@@ -1,0 +1,95 @@
+.loc-autocomplete {
+  position: relative;
+  width: 100%;
+}
+
+.loc-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.loc-input-icon {
+  position: absolute;
+  left: 12px;
+  font-size: 0.85rem;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.loc-input-wrapper input {
+  width: 100%;
+  padding: 10px 14px 10px 44px;
+  background: var(--black);
+  border: 2px solid var(--black-lighter);
+  border-radius: 8px;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.loc-input-wrapper input:focus {
+  border-color: var(--yellow);
+}
+
+.loc-input-wrapper input::placeholder {
+  color: var(--gray-dark);
+}
+
+/* Dropdown */
+.loc-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--black-light);
+  border: 2px solid var(--black-lighter);
+  border-radius: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 4px;
+  max-height: 260px;
+  overflow-y: auto;
+  z-index: 100;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.loc-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--white);
+  transition: background 0.12s;
+}
+
+.loc-option:hover,
+.loc-option-active {
+  background: var(--yellow-glow);
+}
+
+.loc-option-active {
+  background: var(--yellow-glow);
+}
+
+.loc-option-icon {
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
+.loc-option-text {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.loc-highlight {
+  color: var(--yellow);
+  font-weight: 700;
+}

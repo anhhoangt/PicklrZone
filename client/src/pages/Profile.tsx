@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getUserProfile, updateUserProfile } from "../services/api";
 import { UserProfile, UserRole } from "../types";
 import { useAuth } from "../contexts/AuthContext";
+import LocationAutocomplete from "../components/LocationAutocomplete";
 import "./Profile.css";
 
 const Profile: React.FC = () => {
@@ -133,10 +134,9 @@ const Profile: React.FC = () => {
 
             <label className="form-label">
               Location (City, State)
-              <input
-                type="text"
+              <LocationAutocomplete
                 value={location}
-                onChange={(e) => setLocation(e.target.value)}
+                onChange={setLocation}
                 placeholder="e.g., Austin, TX"
               />
               <span className="form-helper">

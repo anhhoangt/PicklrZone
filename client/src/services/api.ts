@@ -116,3 +116,8 @@ export const sendMessage = (conversationId: string, text: string) =>
     method: "POST",
     body: JSON.stringify({ text }),
   });
+
+export const markConversationRead = (conversationId: string) =>
+  request<any>(`/api/messages/conversations/${conversationId}/read`, {
+    method: "PUT",
+  });

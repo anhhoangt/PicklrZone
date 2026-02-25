@@ -135,6 +135,7 @@ export interface Conversation {
   lastMessage?: string;
   lastMessageBy?: string;
   lastMessageAt?: string;
+  lastReadAt: Record<string, string>;
   createdBy: string;
   createdAt: string;
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import {
-  getConversations, getMessages, sendMessage, createConversation, searchUsers,
+  getConversations, getMessages, sendMessage, createConversation, searchUsers, markConversationRead,
 } from "../services/api";
 import { Conversation, Message } from "../types";
 import { useAuth } from "../contexts/AuthContext";
@@ -30,11 +30,20 @@ const Messages: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const unsubRef = useRef<(() => void) | null>(null);
 
+  const isUnread = useCallback((conv: Conversation) => {
+    if (!currentUser?.uid) return false;
+    if (!conv.lastMessageAt) return false;
+    if (conv.lastMessageBy === currentUser.uid) return false;
+    const lastRead = conv.lastReadAt?.[currentUser.uid];
+    if (!lastRead) return true;
+    return conv.lastMessageAt > lastRead;
+  }, [currentUser?.uid]);
+
   // Load conversations
   useEffect(() => {
     const load = async () => {
       try {
-      const convs = await getConversations();
+        const convs = await getConversations();
         setConversations(convs);
       } catch (err) {
         console.error("Failed to load conversations:", err);
@@ -79,6 +88,23 @@ const Messages: React.FC = () => {
   const openConversation = async (conv: Conversation) => {
     setActiveConv(conv);
     subscribeToMessages(conv.id);
+
+    // Mark conversation as read
+    if (isUnread(conv)) {
+      try {
+        await markConversationRead(conv.id);
+        // Update local state so the bold/dot disappears immediately
+        setConversations((prev) =>
+          prev.map((c) =>
+            c.id === conv.id
+              ? { ...c, lastReadAt: { ...c.lastReadAt, [currentUser!.uid]: new Date().toISOString() } }
+              : c
+          )
+        );
+      } catch (err) {
+        console.error("Failed to mark conversation as read:", err);
+      }
+    }
   };
 
   const handleSend = async (e: React.FormEvent) => {
@@ -103,10 +129,10 @@ const Messages: React.FC = () => {
     const timer = setTimeout(async () => {
       try {
         const results = await searchUsers(searchQuery);
-          setSearchResults(results);
-        } catch (err) {
-          console.error("User search failed:", err);
-        }
+        setSearchResults(results);
+      } catch (err) {
+        console.error("User search failed:", err);
+      }
     }, 300);
     return () => clearTimeout(timer);
   }, [searchQuery]);
@@ -201,26 +227,28 @@ const Messages: React.FC = () => {
             {conversations.map((conv) => {
               const photo = getConvPhoto(conv);
               const avatar = getConvAvatar(conv);
+              const unread = isUnread(conv);
               return (
                 <button
                   key={conv.id}
-                  className={`msg-conv-item ${activeConv?.id === conv.id ? "msg-conv-active" : ""}`}
+                  className={`msg-conv-item ${activeConv?.id === conv.id ? "msg-conv-active" : ""} ${unread ? "msg-conv-unread" : ""}`}
                   onClick={() => openConversation(conv)}
                 >
                   <div className="msg-conv-avatar">
                     {photo ? <img src={photo} alt="" /> : <span>{avatar}</span>}
+                    {unread && <span className="msg-unread-dot" />}
                   </div>
                   <div className="msg-conv-info">
-                    <span className="msg-conv-name">{getConvName(conv)}</span>
+                    <span className={`msg-conv-name ${unread ? "msg-conv-name-unread" : ""}`}>{getConvName(conv)}</span>
                     {conv.lastMessage && (
-                      <span className="msg-conv-preview">
+                      <span className={`msg-conv-preview ${unread ? "msg-conv-preview-unread" : ""}`}>
                         {conv.lastMessageBy === currentUser?.uid ? "You: " : ""}
                         {conv.lastMessage}
                       </span>
                     )}
                   </div>
                   {conv.lastMessageAt && (
-                    <span className="msg-conv-time">{timeAgo(conv.lastMessageAt)}</span>
+                    <span className={`msg-conv-time ${unread ? "msg-conv-time-unread" : ""}`}>{timeAgo(conv.lastMessageAt)}</span>
                   )}
                 </button>
               );
