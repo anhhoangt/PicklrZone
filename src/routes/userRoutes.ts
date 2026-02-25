@@ -8,19 +8,23 @@ const router = Router();
 // GET /api/users/profile — get current user's profile
 router.get("/profile", verifyToken, async (req: AuthRequest, res: Response) => {
   try {
-    const doc = await db.collection("users").doc(req.user!.uid).get();
+    const docRef = db.collection("users").doc(req.user!.uid);
+    const doc = await docRef.get();
     if (!doc.exists) {
-      // Return default profile if not created yet
-      res.json({
+      // Auto-create the profile so user is discoverable in message search
+      const now = new Date().toISOString();
+      const defaultProfile: UserProfile = {
         uid: req.user!.uid,
-        email: req.user!.email,
-        displayName: req.user!.name || "",
+        email: req.user!.email || "",
+        displayName: req.user!.name || req.user!.email || "",
         role: "user",
         bio: "",
         location: "",
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      } as UserProfile);
+        createdAt: now,
+        updatedAt: now,
+      };
+      await docRef.set(defaultProfile);
+      res.json(defaultProfile);
       return;
     }
     res.json({ uid: doc.id, ...doc.data() } as UserProfile);

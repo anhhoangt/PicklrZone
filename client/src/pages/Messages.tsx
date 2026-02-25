@@ -34,9 +34,11 @@ const Messages: React.FC = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const convs = await getConversations();
+      const convs = await getConversations();
         setConversations(convs);
-      } catch {}
+      } catch (err) {
+        console.error("Failed to load conversations:", err);
+      }
       setLoading(false);
     };
     load();
@@ -47,22 +49,26 @@ const Messages: React.FC = () => {
     // Cleanup previous listener
     if (unsubRef.current) unsubRef.current();
 
-    try {
-      const messagesRef = collection(firestore, "conversations", conversationId, "messages");
-      const q = query(messagesRef, orderBy("createdAt", "asc"));
-      const unsub = onSnapshot(q, (snapshot) => {
+    const messagesRef = collection(firestore, "conversations", conversationId, "messages");
+    const q = query(messagesRef, orderBy("createdAt", "asc"));
+    const unsub = onSnapshot(
+      q,
+      (snapshot) => {
         const msgs: Message[] = [];
         snapshot.forEach((doc) => {
           msgs.push({ id: doc.id, ...doc.data() } as Message);
         });
         setMessages(msgs);
         setTimeout(() => messagesEndRef.current?.scrollIntoView({ behavior: "smooth" }), 50);
-      });
-      unsubRef.current = unsub;
-    } catch {
-      // Fallback to API polling if Firestore direct access fails
-      getMessages(conversationId).then(setMessages).catch(() => {});
-    }
+      },
+      (error) => {
+        console.error("Firestore real-time listener failed, falling back to API:", error);
+        getMessages(conversationId).then(setMessages).catch((err) => {
+          console.error("Fallback API fetch also failed:", err);
+        });
+      }
+    );
+    unsubRef.current = unsub;
   }, []);
 
   // Cleanup listener on unmount
@@ -85,7 +91,9 @@ const Messages: React.FC = () => {
       // Update conversation list
       const convs = await getConversations();
       setConversations(convs);
-    } catch {}
+    } catch (err) {
+      console.error("Failed to send message:", err);
+    }
     setSending(false);
   };
 
@@ -95,8 +103,10 @@ const Messages: React.FC = () => {
     const timer = setTimeout(async () => {
       try {
         const results = await searchUsers(searchQuery);
-        setSearchResults(results);
-      } catch {}
+          setSearchResults(results);
+        } catch (err) {
+          console.error("User search failed:", err);
+        }
     }, 300);
     return () => clearTimeout(timer);
   }, [searchQuery]);

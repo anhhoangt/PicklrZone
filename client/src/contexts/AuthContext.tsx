@@ -34,6 +34,26 @@ export const useAuth = (): AuthContextType => {
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
+const ensureUserProfile = async (user: { uid: string; email: string | null; displayName: string | null; photoURL: string | null }) => {
+  try {
+    const token = await auth.currentUser?.getIdToken();
+    if (!token) return;
+    await fetch(`${API_URL}/api/users/profile`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        displayName: user.displayName || user.email || "",
+        photoURL: user.photoURL || "",
+      }),
+    });
+  } catch (err) {
+    console.error("Error ensuring user profile:", err);
+  }
+};
+
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [userRole, setUserRole] = useState<UserRole>("user");
@@ -76,14 +96,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signUpWithEmail = async (email: string, password: string, displayName: string) => {
     const credential = await createUserWithEmailAndPassword(auth, email, password);
     await updateProfile(credential.user, { displayName });
+    await ensureUserProfile({
+      uid: credential.user.uid,
+      email: credential.user.email,
+      displayName,
+      photoURL: credential.user.photoURL,
+    });
   };
 
   const loginWithEmail = async (email: string, password: string) => {
-    await signInWithEmailAndPassword(auth, email, password);
+    const credential = await signInWithEmailAndPassword(auth, email, password);
+    await ensureUserProfile({
+      uid: credential.user.uid,
+      email: credential.user.email,
+      displayName: credential.user.displayName,
+      photoURL: credential.user.photoURL,
+    });
   };
 
   const loginWithGoogle = async () => {
-    await signInWithPopup(auth, googleProvider);
+    const credential = await signInWithPopup(auth, googleProvider);
+    await ensureUserProfile({
+      uid: credential.user.uid,
+      email: credential.user.email,
+      displayName: credential.user.displayName,
+      photoURL: credential.user.photoURL,
+    });
   };
 
   const logout = async () => {

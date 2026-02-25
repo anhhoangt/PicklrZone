@@ -55,7 +55,9 @@ router.get("/users/search", verifyToken, async (req: AuthRequest, res: Response)
           });
         }
       });
-    } catch {}
+    } catch (authErr) {
+      console.error("Firebase Auth listUsers fallback failed:", authErr);
+    }
 
     res.json(users.slice(0, 20));
   } catch (err) {
@@ -136,15 +138,17 @@ router.post("/conversations", verifyToken, async (req: AuthRequest, res: Respons
       participantPhotos[uid] = userData?.photoURL || "";
     }
 
-    const conversationData: Omit<Conversation, "id"> = {
+    const conversationData: Record<string, any> = {
       type,
-      name: type === "group" ? name : undefined,
       participants: allParticipants,
       participantNames,
       participantPhotos,
       createdBy: req.user!.uid,
       createdAt: new Date().toISOString(),
     };
+    if (type === "group" && name) {
+      conversationData.name = name;
+    }
 
     const docRef = await db.collection("conversations").add(conversationData);
     res.status(201).json({ id: docRef.id, ...conversationData });
